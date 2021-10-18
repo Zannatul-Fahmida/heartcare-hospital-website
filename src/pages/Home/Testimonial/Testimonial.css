@@ -1,0 +1,10 @@
+.testimonial:hover{
+    box-shadow: rgba(0, 87, 248, 0.205) 0px 3px 6px 1px, 
+    rgba(0, 89, 255, 0.116) 0px 4px 8px 1px;
+}
+.icon{
+    font-size: 60px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 50%;
+}

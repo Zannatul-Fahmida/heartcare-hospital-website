@@ -1,0 +1,4 @@
+.hover-effect:hover{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 6px 9px -1px, 
+    rgba(0, 0, 0, 0.06) 0px 6px 9px -1px;
+}
