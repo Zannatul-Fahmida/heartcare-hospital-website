@@ -14,14 +14,10 @@ const useFirebase = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const auth = getAuth();
+    const googleProvider = new GoogleAuthProvider();
 
     const signInUsingGoogle = () => {
-        setIsLoading(true);
-        const googleProvider = new GoogleAuthProvider();
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                setUser(result.user);
-            })
+        return signInWithPopup(auth, googleProvider)
             .finally(() => setIsLoading(false));
     }
 
@@ -62,27 +58,16 @@ const useFirebase = () => {
             setError("Confirm password doesn't match")
         }
     }
-    const handleLogIn = (email, password) => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(result => {
-                setUser(result.user);
-                console.log(result.user);
-                setError('')
-            })
+    const logInWithEmailAndPassword = () => {
+        return signInWithEmailAndPassword(auth, email, password)
             .catch(error => {
-                setError(error.message)
+                setError(error.message);
             })
     }
-    const handleSignUp = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(result => {
-                setUser(result.user);
-                console.log(result.user);
-                setError('');
-                setUserName();
-            })
+    const signUpWithEmailAndPassword = () => {
+        return createUserWithEmailAndPassword(auth, email, password)
             .catch(error => {
-                setError(error.message)
+                setError(error.message);
             })
 
     }
@@ -100,9 +85,12 @@ const useFirebase = () => {
         handleEmail,
         handleName,
         handlePassword,
-        handleLogIn,
-        handleSignUp,
-        handleConfirmPassword
+        logInWithEmailAndPassword,
+        signUpWithEmailAndPassword,
+        handleConfirmPassword,
+        setUserName,
+        setError,
+        setUser
     }
 }
 

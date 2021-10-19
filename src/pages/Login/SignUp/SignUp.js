@@ -1,10 +1,24 @@
 import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 const SignUp = () => {
-    const { handleEmail, handlePassword, handleSignUp, error, handleName, handleConfirmPassword } = useAuth();
+    const { setUser, setError, setUserName, handleEmail, handlePassword, error, handleName, handleConfirmPassword, signUpWithEmailAndPassword } = useAuth();
+    const location = useLocation();
+    const history = useHistory();
+    const redirect_uri = location.state?.from || '/home';
+
+    const handleEmailAndPasswordSignUp = ()=>{
+        signUpWithEmailAndPassword()
+        .then(result => {
+            setUser(result.user);
+            setError('');
+            setUserName();
+            history.push(redirect_uri);
+        })
+    }
+
     return (
         <Container>
         <h1 className="text-center my-4">Sign Up</h1>
@@ -42,7 +56,7 @@ const SignUp = () => {
                         />
                         <label htmlFor="floatingPasswordCustom3">Confirm Password</label>
                     </Form.Floating>
-                <Button variant="danger" className="col-12 col-md-4 py-3 border-0" onClick={handleSignUp}>Sign up</Button>
+                <Button variant="danger" className="col-12 col-md-4 py-3 border-0" onClick={handleEmailAndPasswordSignUp}>Sign up</Button>
                 <p className="text-danger">{error}</p>
                 <p className="mt-3">Already have an account??
                     <Link to="/login" className="text-decoration-none account-text fw-bold">Login</Link></p>
