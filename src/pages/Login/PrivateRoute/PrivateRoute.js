@@ -1,12 +1,25 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Button } from 'react-bootstrap';
 import { Redirect, Route } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 
 const PrivateRoute = ({ children, ...rest }) => {
     const { user, isLoading } = useAuth();
-    if(isLoading){
-        return <Spinner animation="grow" variant="danger" />;
+    if (isLoading) {
+        return (
+            <div className="text-center my-5">
+                <Button variant="primary" disabled>
+                <Spinner
+                    as="span"
+                    animation="grow"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                />
+                Loading...
+            </Button>
+            </div>
+        );
     }
     return (
         <Route
